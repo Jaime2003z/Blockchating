@@ -53,3 +53,10 @@ func GetMessages(bc *blockchain.Blockchain) gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{"blocks": bc.Blocks})
 	}
 }
+
+// Creamos un metodo enpoint para compartir la blockchain entre nodos P2P
+func SyncBlockchain(bc *blockchain.Blockchain) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.JSON(http.StatusOK, bc)
+	}
+}

@@ -13,6 +13,7 @@ func SetupRouter(bc *blockchain.Blockchain, cfg *config.Config, storagePath stri
 	// Definir endpoints
 	r.POST("/message", PostMessage(bc, cfg, storagePath))
 	r.GET("/messages", GetMessages(bc))
+	r.GET("/sync", SyncBlockchain(bc))
 
 	return r
 }

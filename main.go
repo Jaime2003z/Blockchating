@@ -3,6 +3,7 @@ package main
 import (
 	"blockchating/api"
 	"blockchating/config"
+	"blockchating/p2p"
 	"blockchating/storage"
 	"fmt"
 )
@@ -26,6 +27,16 @@ func main() {
 	if !bc.IsValid() {
 		fmt.Println("Error: La blockchain cargada no es válida")
 		return
+	}
+
+	// Sincronizar con peers (ejemplo con un peer hardcoded)
+	peers := []p2p.Peer{
+		{Address: "localhost:8081"}, // Otro nodo corriendo en el puerto 8081
+	}
+	for _, peer := range peers {
+		if err := p2p.SyncFromPeer(bc, peer, cfg.StoragePath); err != nil {
+			fmt.Printf("Error sincronizando con %s: %v\n", peer.Address, err)
+		}
 	}
 
 	// Configurar el enrutador Gin
